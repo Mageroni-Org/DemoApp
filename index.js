@@ -2,12 +2,11 @@
 const express = require('express');
 const app = express();
 
-// agregar express body parser
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: false }));
-
 // configurar app de express
 app.set('port', process.env.PORT || 3000);
+
+// middleware para parsear el cuerpo de las solicitudes
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // configurar EJS como motor de plantillas
 app.set('view engine', 'ejs');
