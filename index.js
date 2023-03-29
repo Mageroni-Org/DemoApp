@@ -1,62 +1,64 @@
+// crear app de express
 const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-
 const app = express();
-const port = 3000;
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost/contacts', { useNewUrlParser: true });
+// agregar express body parser
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// Define the contact schema
-const contactSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  phone: { type: String, required: true },
-  notes: { type: String }
+// configurar app de express
+app.set('port', process.env.PORT || 3000);
+
+// configurar EJS como motor de plantillas
+app.set('view engine', 'ejs');
+
+// iniciar servidor
+app.listen(app.get('port'), () => {
+    console.log('Servidor iniciado en el puerto', app.get('port'));
 });
 
-// Define the contact model
-const Contact = mongoose.model('Contact', contactSchema);
-
-// Set up body-parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-// Define the CRUD routes for contacts
-app.get('/contacts', (req, res) => {
-    Contact.find({}, (err, contacts) => {
-        if (err) {
-        res.status(500).send('Error occurred: database error.');
-        } else {
-        res.json(contacts);
-        }
-    });
-    });
-
-app.post('/contacts', (req, res) => {
-    const newContact = new Contact(req.body);
-    newContact.save((err, savedContact) => {
-        if (err) {
-        res.status(500).send('Error occurred: database error.');
-        } else {
-        res.json(savedContact);
-        }
-    });
-    }
+// configurar get y servir index.html
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/views/index.html');
+}
 );
 
-// search contacts by id
-app.get('/contacts/:id', (req, res) => {
-    Contact.findById(req.params.id, (err, contact) => {
-        if (err) {
-        res.status(500).send('Error occurred: database error.');
-        } else {
-        res.json(contact);
-        }
-    });
+// crear clase Contact
+class Contact {
+    constructor(name, lastname, position, company) {
+        this.name = name;
+        this.lastname = lastname;
+        this.position = position;
+        this.company = company;
     }
+}
+
+// crear lista de contactos
+let contactList = [];
+
+// agregar ruta para contactAdd.html
+app.get('/contactAdd', (req, res) => {
+    res.sendFile(__dirname + '/views/contactAdd.html');
+});
+
+// agregar ruta para contactList.ejs utilizando EJS
+app.get('/contactList', (req, res) => {
+    res.render('contactList', { contactList: contactList });
+});
+
+// agregar post para contactAdd e imprimir en la consola el valor del contacto
+app.post('/contactAdd', (req, res) => {
+    console.log(req.body);
+    // crear un nuevo contacto
+    let contact = new Contact(req.body.name, req.body.lastname, req.body.position, req.body.company);
+    // agregar el contacto a la lista de contactos
+    contactList.push(contact);
+    // redireccionar a index.html
+    res.redirect('/');
+}
 );
+
+
 
 
 

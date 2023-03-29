@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contacts</title>
+</head>
+<body>
+    <h1>Contacts</h1>
+    <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Lastname</th>
+            <th>Position</th>
+            <th>Company</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var i = 0; i < contactList.length; i++) { %>
+            <tr>
+              <td><%= contactList[i].name %></td>
+              <td><%= contactList[i].lastname %></td>
+              <td><%= contactList[i].position %></td>
+              <td><%= contactList[i].company %></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    <!-- agregar boton para volver a index.html -->
+    <a href="/">Volver</a>
+</body>
+</html>
