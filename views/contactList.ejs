@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contacts</title>
+</head>
+<body>
+    <h1>Contacts</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Company</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% contactList.forEach(function(contact) { %>
+                <tr>
+                    <td><%= contact.name %></td>
+                    <td><%= contact.id %></td>
+                    <td><%= contact.company %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
