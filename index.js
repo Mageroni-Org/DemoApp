@@ -37,7 +37,8 @@ let contactList = [];
 // agregar metodo post para agregar un contacto
 app.post('/contactAdd', (req, res) => {
     // imprimir contacto en la linea de comandos
-    console.log("Este es el contacto: " + req.body);
+    console.log("Imprimiendo el contacto: ");
+    console.log(req.body);
     // redirige al home page
     res.redirect('/');
 }
