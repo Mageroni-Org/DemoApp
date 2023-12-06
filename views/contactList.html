@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact List</title>
+    <link rel="stylesheet" href="contactList.css">
+</head>
+<body>
+    <h1>Contact List</h1>
+    <ul id="contacts">
+        <% for (let contact of contacts) { %>
+        <li>
+            <p>Name: <%= contact.name %></p>
+            <p>Email: <%= contact.email %></p>
+            <p>Phone: <%= contact.phone %></p>
+            <form action="/contacts/<%= contact._id %>" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" value="<%= contact.name %>">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" value="<%= contact.email %>">
+                <label for="phone">Phone:</label>
+                <input type="tel" name="phone" id="phone" value="<%= contact.phone %>">
+                <button type="submit">Update</button>
+            </form>
+        </li>
+        <% } %>
+    </ul>
+    <button id="toggle">Toggle Dark Mode</button>
+    <script src="contactList.js"></script>
+</body>
+</html>
