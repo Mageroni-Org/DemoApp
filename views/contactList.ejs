@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- agregar un elemento de tabla -->
+    <table class="table table-striped">
+        <!-- agregar un encabezado de tabla con las columnas nombre, id y empresa -->
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Company</th>
+            </tr>
+        </thead>
+        <!-- agregar un cuerpo de tabla con un bucle para mostrar cada contacto -->
+        <tbody>
+            <% for (let contact of contactList) { %>
+            <tr>
+                <td><%= contact.name %></td>
+                <td><%= contact.id %></td>
+                <td><%= contact.company %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

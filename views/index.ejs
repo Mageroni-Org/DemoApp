@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- agregar una variable CSS para el color de fondo -->
+    <style>
+        :root {
+            --bg-color: white;
+        }
+        body {
+            background-color: var(--bg-color);
+        }
+    </style>
+</head>
+<body>
+    <h1>My Contact App</h1>
+    <!-- Agregar parrafo que explique las ventajas de guardar tus contactos de manera segura -->
+    <p>Con esta aplicación podrás guardar tus contactos de manera segura</p>
+    <!-- Agregar boton para enviar a pagina de contactAdd -->
+    <a href="/contactAdd" class="btn btn-primary">Agregar Contacto</a>
+    <!-- Agregar un link a la pagina de contactList -->
+    <a href="/contactList" class="btn btn-secondary">Ver Contactos</a>
+    <!-- Agregar un boton para cambiar a dark mode -->
+    <button id="dark-mode" class="btn btn-dark">Dark Mode</button>
+    <!-- Agregar un script para cambiar la variable CSS al hacer clic en el boton -->
+    <script>
+        // obtener el boton por su id
+        let darkModeButton = document.getElementById('dark-mode');
+        // agregar un evento de clic al boton
+        darkModeButton.addEventListener('click', function() {
+            // obtener el valor actual de la variable CSS
+            let bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
+            // si el valor es blanco, cambiarlo a negro
+            if (bgColor === 'white') {
+                document.documentElement.style.setProperty('--bg-color', 'black');
+            }
+            // si el valor es negro, cambiarlo a blanco
+            else if (bgColor === 'black') {
+                document.documentElement.style.setProperty('--bg-color', 'white');
+            }
+        });
+    </script>
+</body>
+</html>
