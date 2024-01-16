@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- agregar link al CDN de darkmode.js -->
+    <script src="https://darkmodejs.learn.uno/lib/darkmode-js.min.js"></script>
+</head>
+<body>
+    <h1>My Contact List</h1>
+    <!-- crear una tabla con los encabezados Name, ID y Company -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Company</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- usar EJS para iterar sobre la lista de contactos y mostrar cada uno en una fila -->
+            <% for (let contact of contactList) { %>
+            <tr>
+                <td><%= contact.name %></td>
+                <td><%= contact.id %></td>
+                <td><%= contact.company %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <!-- agregar un script para inicializar el widget de darkmode -->
+    <script>
+        // opciones para el widget
+        const options = {
+            bottom: '64px', // default: '32px'
+            right: 'unset', // default: '32px'
+            left: '32px', // default: 'unset'
+            time: '0.5s', // default: '0.3s'
+            mixColor: '#fff', // default: '#fff'
+            backgroundColor: '#fff',  // default: '#fff'
+            buttonColorDark: '#100f2c',  // default: '#100f2c'
+            buttonColorLight: '#fff', // default: '#fff'
+            saveInCookies: false, // default: true,
+            label: '🌓', // default: ''
+            autoMatchOsTheme: true // default: true
+        }
+
+        // inicializar el widget
+        const darkmode = new Darkmode(options);
+        darkmode.showWidget();
+    </script>
+</body>
+</html>
