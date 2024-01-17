@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Contacts</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body data-theme="light">
+    <h1>My Contact List</h1>
+    <!-- agregar un boton o un interruptor para cambiar entre el modo normal y el dark mode -->
+    <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="darkSwitch">
+        <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+    </div>
+    <!-- escribir el código HTML y EJS para mostrar una tabla con los datos de los contactos -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Company</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let contact of contacts) { %>
+            <tr>
+                <td><%= contact.name %></td>
+                <td><%= contact.id %></td>
+                <td><%= contact.company %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <script src="/script.js"></script>
+</body>

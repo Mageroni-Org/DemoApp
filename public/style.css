@@ -1,0 +1,20 @@
+/* agregar los estilos para el dark mode */
+
+/* seleccionar los elementos que tienen el atributo data-theme */
+[data-theme] {
+    /* usar variables CSS para los colores */
+    --bg-color: white;
+    --text-color: black;
+}
+
+/* cambiar los valores de las variables según el valor del atributo data-theme */
+[data-theme="dark"] {
+    --bg-color: black;
+    --text-color: white;
+}
+
+/* aplicar los colores a los elementos del body */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
