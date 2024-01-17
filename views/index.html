@@ -4,12 +4,21 @@
     <title>Contact App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
-<body>
+<body data-theme="light">
     <h1>My Contact App</h1>
     <!-- Agregar parrafo que explique las ventajas de guardar tus contactos de manera segura -->
     <p>Con esta aplicación podrás guardar tus contactos de manera segura</p>
     <!-- Agregar boton para enviar a pagina de contactAdd -->
     <a href="/contactAdd" class="btn btn-primary">Agregar Contacto</a>
+    <!-- Agregar un enlace a la ruta /contactList -->
+    <a href="/contactList" class="btn btn-secondary">Ver Contactos</a>
+    <!-- agregar un boton o un interruptor para cambiar entre el modo normal y el dark mode -->
+    <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="darkSwitch">
+        <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+    </div>
+    <script src="/script.js"></script>
 </body>
 </html>
