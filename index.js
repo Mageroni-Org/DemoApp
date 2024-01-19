@@ -2,10 +2,17 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const bodyParser = require('body-parser');
 
-// configurar la ruta raiz hacia index.html
+// usar body-parser como middleware
+app.use(bodyParser.urlencoded({extended: true}));
+
+// usar ejs como motor de plantillas
+app.set('view engine', 'ejs');
+
+// configurar la ruta raiz hacia index.ejs
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/views/index.html');
+    res.render('index');
 }
 );
 
@@ -39,9 +46,22 @@ app.post('/contactAdd', (req, res) => {
     // imprimir contacto en la linea de comandos
     console.log("Imprimiendo el contacto: ");
     console.log(req.body);
+    // crear un nuevo objeto Contact con los datos del formulario
+    let newContact = new Contact(req.body.name, req.body.id, req.body.company);
+    // agregar el nuevo contacto a la lista de contactos
+    contactList.push(newContact);
     // redirige al home page
     res.redirect('/');
 }
 );
 
-
+// agregar ruta de contactList hacia contactList.ejs
+app.get('/contactList', (req, res) => {
+    // si no hay una variable de sesión para el modo, crearla con valor 'light'
+    if (!req.session.mode) {
+        req.session.mode = 'light';
+    }
+    // renderizar la vista contactList.ejs y enviar la lista de contactos y el modo como parametros
+    res.render('contactList', {contacts: contactList, mode: req.session.mode});
+}
+);

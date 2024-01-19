@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        // funcion para cambiar entre dark mode y light mode
+        function toggleMode() {
+            // obtener el elemento body
+            let body = document.querySelector('body');
+            // si el modo actual es light, cambiarlo a dark y viceversa
+            if (<%= mode %> === 'light') {
+                body.style.backgroundColor = 'black';
+                body.style.color = 'white';
+                // enviar una peticion ajax al servidor para cambiar el valor de la variable de sesion
+                $.ajax({
+                    url: '/changeMode',
+                    type: 'POST',
+                    data: {mode: 'dark'}
+                });
+            } else {
+                body.style.backgroundColor = 'white';
+                body.style.color = 'black';
+                // enviar una peticion ajax al servidor para cambiar el valor de la variable de sesion
+                $.ajax({
+                    url: '/changeMode',
+                    type: 'POST',
+                    data: {mode: 'light'}
+                });
+            }
+        }
+
+        // funcion para ordenar los contactos alfabeticamente por nombre
+        function sortContacts() {
+            // obtener el elemento table
+            let table = document.querySelector('table');
+            // obtener el array de filas de la tabla
+            let rows = Array.from(table.rows);
+            // eliminar la primera fila que contiene los encabezados
+            rows.shift();
+            // ordenar el array de filas usando la funcion sort y comparando el texto de la primera celda de cada fila
+            rows.sort((a, b) => {
+                return a.cells[0].textContent.localeCompare(b.cells[0].textContent);
+            });
+            // vaciar el contenido de la tabla
+            table.innerHTML = '';
+            // crear una nueva fila para los encabezados
+            let headerRow = document.createElement('tr');
+            // crear las celdas para los encabezados y agregarles el texto correspondiente
+            let nameHeader = document.createElement('th');
+            nameHeader.textContent = 'Name';
+            let idHeader = document.createElement('th');
+            idHeader.textContent = 'ID';
+            let companyHeader = document.createElement('th');
+            companyHeader.textContent = 'Company';
+            // agregar las celdas de los encabezados a la fila de los encabezados
+            headerRow.appendChild(nameHeader);
+            headerRow.appendChild(idHeader);
+            headerRow.appendChild(companyHeader);
+            // agregar la fila de los encabezados a la tabla
+            table.appendChild(headerRow);
+            // recorrer el array de filas ordenadas y agregarlas a la tabla
+            for (let row of rows) {
+                table.appendChild(row);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Contact List</h1>
+    <!-- Agregar boton para cambiar entre dark mode y light mode -->
+    <button onclick="toggleMode()">Toggle Mode</button>
+    <!-- Agregar boton para ordenar los contactos alfabeticamente por nombre -->
+    <button onclick="sortContacts()">Sort Contacts</button>
+    <!-- Agregar tabla para mostrar los contactos con estilo Bootstrap -->
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Company</th>
+        </tr>
+        <!-- Usar EJS para iterar sobre el array de contactos y crear una fila por cada uno -->
+        <% for (let contact of contacts) { %>
+        <tr>
+            <td><%= contact.name %></td>
+            <td><%= contact.id %></td>
+            <td><%= contact.company %></td>
+        </tr>
+        <% } %>
+    </table>
+</body>
+</html>
