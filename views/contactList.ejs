@@ -1,0 +1,79 @@
+<%- include('index.html') %>
+<h2>Lista de Contactos</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>ID</th>
+            <th>Empresa</th>
+        </tr>
+    </thead>
+    <tbody id="contact-table">
+        <% for (let contact of contactList) { %>
+        <tr>
+            <td><%= contact.name %></td>
+            <td><%= contact.id %></td>
+            <td><%= contact.company %></td>
+        </tr>
+        <% } %>
+    </tbody>
+</table>
+<button id="sort-button" class="btn btn-secondary">Ordenar alfabéticamente</button>
+<button id="dark-button" class="btn btn-dark">Modo oscuro</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    // definir una funcion para ordenar la lista de contactos por nombre
+    function sortContacts() {
+        // usar el metodo sort de JavaScript para comparar los nombres de los contactos
+        contactList.sort((a, b) => {
+            // convertir los nombres a minusculas para ignorar las mayusculas
+            let nameA = a.name.toLowerCase();
+            let nameB = b.name.toLowerCase();
+            // si el nombre A es menor que el nombre B, retornar un numero negativo
+            if (nameA < nameB) {
+                return -1;
+            }
+            // si el nombre A es mayor que el nombre B, retornar un numero positivo
+            if (nameA > nameB) {
+                return 1;
+            }
+            // si los nombres son iguales, retornar cero
+            return 0;
+        });
+        // vaciar el cuerpo de la tabla
+        $("#contact-table").empty();
+        // rellenar el cuerpo de la tabla con las filas ordenadas
+        for (let contact of contactList) {
+            // crear una fila con los datos del contacto
+            let row = `<tr>
+                <td>${contact.name}</td>
+                <td>${contact.id}</td>
+                <td>${contact.company}</td>
+            </tr>`;
+            // agregar la fila al cuerpo de la tabla
+            $("#contact-table").append(row);
+        }
+    }
+
+    // definir una funcion para cambiar el modo oscuro de la pagina
+    function toggleDarkMode() {
+        // obtener el elemento body
+        let body = $("body");
+        // si el body tiene la clase bg-dark, quitarla y agregar la clase bg-light
+        if (body.hasClass("bg-dark")) {
+            body.removeClass("bg-dark");
+            body.addClass("bg-light");
+        }
+        // si no, quitar la clase bg-light y agregar la clase bg-dark
+        else {
+            body.removeClass("bg-light");
+            body.addClass("bg-dark");
+        }
+    }
+
+    // agregar un manejador de evento click al boton de ordenar
+    $("#sort-button").click(sortContacts);
+
+    // agregar un manejador de evento click al boton de modo oscuro
+    $("#dark-button").click(toggleDarkMode);
+</script>
