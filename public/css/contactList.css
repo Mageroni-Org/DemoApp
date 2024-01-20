@@ -1,0 +1,57 @@
+/* agregar reglas de css para la tabla */
+#contact-table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px auto;
+}
+
+#contact-table th, #contact-table td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}
+
+#contact-table th {
+    background-color: lightblue;
+}
+
+/* agregar reglas de css para el boton de ordenar */
+#sort-button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* agregar reglas de css para el boton de dark mode */
+#dark-button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* agregar reglas de css para el dark mode */
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+.dark-mode #contact-table th {
+    background-color: darkblue;
+}
+
+.dark-mode #sort-button {
+    background-color: lightgreen;
+}
+
+.dark-mode #dark-button {
+    background-color: white;
+    color: black;
+}

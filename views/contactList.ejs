@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact List</title>
+    <!-- agregar link al archivo de css -->
+    <link rel="stylesheet" href="/css/contactList.css">
+    <!-- agregar link al archivo de jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>My Contact List</h1>
+    <!-- agregar boton para ordenar alfabeticamente -->
+    <button id="sort-button">Ordenar alfabéticamente</button>
+    <!-- agregar boton para activar el dark mode -->
+    <button id="dark-button">Dark Mode</button>
+    <!-- agregar tabla para mostrar los contactos -->
+    <table id="contact-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Company</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- usar la sintaxis de ejs para iterar sobre la lista de contactos y crear una fila por cada uno -->
+            <% for (let contact of contactList) { %>
+                <tr>
+                    <td><%= contact.name %></td>
+                    <td><%= contact.id %></td>
+                    <td><%= contact.company %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <!-- agregar script para el archivo de js -->
+    <script src="/js/contactList.js"></script>
+</body>
+</html>
