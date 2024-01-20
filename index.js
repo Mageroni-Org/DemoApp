@@ -33,15 +33,23 @@ class Contact {
 // crear lista de contactos
 let contactList = [];
 
-
 // agregar metodo post para agregar un contacto
 app.post('/contactAdd', (req, res) => {
     // imprimir contacto en la linea de comandos
     console.log("Imprimiendo el contacto: ");
     console.log(req.body);
+    // crear un objeto de Contact con los datos del formulario
+    let newContact = new Contact(req.body.name, req.body.id, req.body.company);
+    // agregar el contacto a la lista de contactos
+    contactList.push(newContact);
     // redirige al home page
     res.redirect('/');
 }
 );
 
-
+// agregar ruta de contactList hacia contactList.ejs
+app.get('/contactList', (req, res) => {
+    // renderizar la vista de contactList.ejs y pasar la lista de contactos como un parametro
+    res.render('contactList', {contactList: contactList});
+}
+);
