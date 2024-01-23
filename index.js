@@ -3,6 +3,13 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+// requerir body-parser y usarlo
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// configurar ejs como renderizador
+app.set('view engine', 'ejs');
+
 // configurar la ruta raiz hacia index.html
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/index.html');
@@ -39,9 +46,16 @@ app.post('/contactAdd', (req, res) => {
     // imprimir contacto en la linea de comandos
     console.log("Imprimiendo el contacto: ");
     console.log(req.body);
+    // agregar el contacto a la lista
+    contactList.push(new Contact(req.body.name, req.body.id, req.body.company));
     // redirige al home page
     res.redirect('/');
 }
 );
 
-
+// agregar ruta de contactList hacia contactList.ejs
+app.get('/contactList', (req, res) => {
+    // renderizar la vista con la lista de contactos
+    res.render('contactList', { contactList: contactList });
+}
+);
