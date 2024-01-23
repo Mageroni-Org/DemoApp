@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body id="body">
+    <h1>My Contact List</h1>
+    <!-- Agregar tabla que muestre los contactos con los campos name, id y company -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Company</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < contactList.length; i++) { %>
+            <tr>
+                <td><%= contactList[i].name %></td>
+                <td><%= contactList[i].id %></td>
+                <td><%= contactList[i].company %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <!-- Agregar boton para ordenar los contactos alfabeticamente por name -->
+    <button id="sort" class="btn btn-primary">Sort by name</button>
+    <!-- Agregar boton para filtrar los contactos por ID -->
+    <button id="filter" class="btn btn-primary">Filter by ID</button>
+    <!-- Agregar boton para cambiar a Dark Mode -->
+    <button id="dark" class="btn btn-primary">Dark Mode</button>
+    <!-- Agregar script para implementar la logica de los botones -->
+    <script>
+        // obtener los elementos del DOM
+        const body = document.getElementById("body");
+        const sort = document.getElementById("sort");
+        const filter = document.getElementById("filter");
+        const dark = document.getElementById("dark");
+
+        // funcion para ordenar los contactos alfabeticamente por name
+        function sortByName() {
+            // obtener la tabla y sus filas
+            const table = document.querySelector("table");
+            const rows = table.rows;
+            // crear un arreglo con los contactos
+            const contacts = [];
+            for (let i = 1; i < rows.length; i++) {
+                contacts.push(rows[i]);
+            }
+            // ordenar el arreglo por name
+            contacts.sort((a, b) => {
+                return a.cells[0].innerText.localeCompare(b.cells[0].innerText);
+            });
+            // reemplazar las filas de la tabla con el arreglo ordenado
+            for (let i = 0; i < contacts.length; i++) {
+                table.appendChild(contacts[i]);
+            }
+        }
+
+        // funcion para filtrar los contactos por ID
+        function filterByID() {
+            // obtener la tabla y sus filas
+            const table = document.querySelector("table");
+            const rows = table.rows;
+            // pedir al usuario el ID a buscar
+            const id = prompt("Enter the ID to search");
+            // recorrer las filas y ocultar las que no coincidan con el ID
+            for (let i = 1; i < rows.length; i++) {
+                if (rows[i].cells[1].innerText !== id) {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+
+        // funcion para cambiar a Dark Mode
+        function toggleDarkMode() {
+            // cambiar el color de fondo y el color de texto del body
+            body.style.backgroundColor = body.style.backgroundColor === "black" ? "white" : "black";
+            body.style.color = body.style.color === "white" ? "black" : "white";
+        }
+
+        // agregar los eventos de click a los botones
+        sort.addEventListener("click", sortByName);
+        filter.addEventListener("click", filterByID);
+        dark.addEventListener("click", toggleDarkMode);
+    </script>
+</body>
