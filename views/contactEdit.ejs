@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Contacts</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- agregar formulario que solicite los siguientes campos: nombre, id, empresa, con los valores actuales del contacto -->
+    <form action="/contactEdit/<%= contact.id %>" method="put">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" value="<%= contact.name %>">
+        </div>
+        <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="text" class="form-control" id="id" name="id" value="<%= contact.id %>">
+        </div>
+        <div class="form-group">
+            <label for="company">Company:</label>
+            <input type="text" class="form-control" id="company" name="company" value="<%= contact.company %>">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</body>

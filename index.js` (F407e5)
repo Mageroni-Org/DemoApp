@@ -1,0 +1,75 @@
+// crear un servidor web utilizando express
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// configurar la ruta raiz hacia index.html
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/views/index.html');
+}
+);
+
+// iniciar el servidor web
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+}
+);
+
+// agregar ruta de contactAdd hacia contactAdd.html
+app.get('/contactAdd', (req, res) => {
+    res.sendFile(__dirname + '/views/contactAdd.html');
+}
+);
+
+// crear clase de Contact con atributos name id y company
+class Contact {
+    constructor(name, id, company) {
+        this.name = name;
+        this.id = id;
+        this.company = company;
+    }
+}
+
+// crear lista de contactos
+let contactList = [];
+
+// agregar middleware para parsear el cuerpo de la solicitud
+app.use(express.urlencoded({extended: true}));
+
+// agregar metodo post para agregar un contacto
+app.post('/contactAdd', (req, res) => {
+    // imprimir contacto en la linea de comandos
+    console.log("Imprimiendo el contacto: ");
+    console.log(req.body);
+    // crear un objeto de Contact con los datos del formulario
+    let newContact = new Contact(req.body.name, req.body.id, req.body.company);
+    // agregar el contacto a la lista de contactos
+    contactList.push(newContact);
+    // redirige al home page
+    res.redirect('/');
+}
+);
+
+// agregar metodo put para editar un contacto
+app.put('/contactEdit/:id', (req, res) => {
+    // buscar el contacto con el id dado en la lista de contactos
+    let contact = contactList.find(c => c.id == req.params.id);
+    // si no se encuentra el contacto, enviar un mensaje de error
+    if (!contact) {
+        res.status(404).send('Contact not found');
+    } else {
+        // si se encuentra el contacto, actualizar sus atributos con los datos del formulario
+        contact.name = req.body.name;
+        contact.company = req.body.company;
+        // enviar un mensaje de exito
+        res.send('Contact updated');
+    }
+}
+);
+
+// agregar ruta de contactList hacia contactList.ejs
+app.get('/contactList', (req, res) => {
+    // renderizar la vista contactList.ejs con la lista de contactos
+    res.render('contactList', {contacts: contactList});
+}
+);

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Contacts</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>My Contact List</h1>
+    <!-- agregar boton para ordenar alfabeticamente los contactos -->
+    <button id="sort-btn" class="btn btn-secondary">Sort by name</button>
+    <!-- agregar boton para cambiar a dark mode -->
+    <button id="dark-btn" class="btn btn-dark">Dark mode</button>
+    <!-- agregar tabla para mostrar los contactos -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Company</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- usar ejs para iterar sobre la lista de contactos y mostrar sus atributos -->
+            <% contactList.forEach(contact => { %>
+            <tr>
+                <td><%= contact.name %></td>
+                <td><%= contact.id %></td>
+                <td><%= contact.company %></td>
+                <td>
+                    <!-- agregar boton para editar el contacto -->
+                    <a href="/contactEdit/<%= contact.id %>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <script>
+        // agregar funcion para ordenar alfabeticamente los contactos
+        function sortByName(a, b) {
+            if (a.name < b.name) {
+                return -1;
+            }
+            if (a.name > b.name) {
+                return 1;
+            }
+            return 0;
+        }
+
+        // agregar evento de click al boton de ordenar
+        $("#sort-btn").click(function () {
+            // obtener la lista de contactos del servidor
+            $.get("/contactList", function (data) {
+                // ordenar la lista usando la funcion de comparacion
+                data.sort(sortByName);
+                // vaciar el cuerpo de la tabla
+                $("tbody").empty();
+                // iterar sobre la lista ordenada y agregar filas a la tabla
+                data.forEach(contact => {
+                    $("tbody").append(`
+                    <tr>
+                        <td>${contact.name}</td>
+                        <td>${contact.id}</td>
+                        <td>${contact.company}</td>
+                        <td>
+                            <a href="/contactEdit/${contact.id}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                        </td>
+                    </tr>
+                    `);
+                });
+            });
+        });
+
+        // agregar variable de estilo para el dark mode
+        let darkMode = false;
+
+        // agregar evento de click al boton de dark mode
+        $("#dark-btn").click(function () {
+            // cambiar el valor de la variable de estilo
+            darkMode = !darkMode;
+            // si el dark mode esta activo, cambiar el color de fondo y el texto de la pagina
+            if (darkMode) {
+                $("body").css("background-color", "black");
+                $("body").css("color", "white");
+                $("#dark-btn").text("Light mode");
+            }
+            // si el dark mode esta desactivado, restaurar el color de fondo y el texto de la pagina
+            else {
+                $("body").css("background-color", "white");
+                $("body").css("color", "black");
+                $("#dark-btn").text("Dark mode");
+            }
+        });
+    </script>
+</body>
